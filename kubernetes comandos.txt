@@ -1,0 +1,132 @@
+minikube stat --no-vtx-check
+minikube status
+kubectl get po
+kubectl describe pod nombre_pod   # muestra información relevante del pod
+kubectl delete pod nombre_pod   #para eliminar un pod
+kubectl api-resources      # para ver todos los recursos que tiene la api
+kubectl get pod nombre_pod #PAra traer un unico pod
+kubectl get pod nombre_pod -o yaml # manifiesto de kubernetes, cómo se creo el pod
+
+kubectl run podtest --image=nginx:alpine  # crear pod
+kubectl label pods podtest app=pod-label # Para asignarle un label a un pod ya creado
+minikube delete
+minikube start --iso-url="https://storage.googleapis.com/minikube/minikube-0.4.iso"
+minikube start
+minikube status
+kubectl get nodes
+docker ps -l
+kubectl describe pod podtest
+kubectl delete pod podtest
+kubectl port-forward podtest 7000:80
+kubectl logs podtest
+kubectl logs podtest -f
+>kubectl api-versions
+kubectl api-resources | grep Pod
+kubectl apply -f pod.yaml
+kubectl delete -f pod.yaml
+kubectl describe pod doscont
+kubectl logs doscont -c cont2
+kubectl delete pod doscont
+kubectl exec -ti doscont -- sh # para ingresar al contenedor por default
+kubectl exec -ti doscont -c cont1 -- sh  # para acceder al contenedor 1
+kubectl exec -ti doscont -c cont2 -- sh
+kubectl get pods -l app=back
+kubectl get pods -l env=dev
+kubectl get rs    # Para obtener las replicaSet que tenemos
+kubectl get replicaset    # Para obtener las replicaSet que tenemos
+kubectl get rs rs-test -o yaml # Para traernos el yaml de un replicaSet
+kubectl get pod rs-test-jmgrz -o yaml # Para traernos el yaml de un pod
+kubectl describe rs rs-test # Describe replicaSet
+kubectl delete -f rs.yaml # Para eliminar los replica set yaml
+kubectl get deployment # Para traer un deployment
+kubectl get deployment --show-labels # Para que me muestre los labels 
+kubectl rollout status deployment deployment-test # Nos muestra como estuvo el estado del deployment anteriormente creado
+kubectl describe desployments deployment-test # Describe de deployment
+kubectl describe deployments.apps deployment-test # Describe del deployment
+kubectl get deployments deployment-test -o yaml # Descripcion de deployment
+kubectl get pod deployment-test-5c8c9c7845-2r7x7 -o yaml # Descripcion de deployment
+kubectl get rs replicasetname -o yaml # Descripcion de replicaset
+kubectl rollout history deployment deployment-test # nos permite ver las revisiones o los rollout que hemos hecho, un deployment mantiene por defecto 10 replicaSet a menos que lo modifiquemos
+kubectl apply -f dep.yaml --record # Vamos a guadar en la revisión (history) el comando.
+kubectl rollout history deployment deployment-test --revision=3 # Para ir a una version en especifico y revisarla
+kubectl rollout undo deployment deployment-test --to-revision=3 # Para devolvernos a un deployment anteriormente
+kubectl get svc -l app=front # Obtener los service
+kubectl describe svc my-service # Describe de mi service
+kubectl get endpoints # para listar los endpoints
+kubectl get po -l app=front -o wide # mas detalle del pod
+kubectl describe endpoints my-service # describe del endpoint
+docker run --rm -dti -v "%cd%":/go --net host --name golang golang bash
+docker run --rm -dti -v "%cd%":/go -p 9090:9090 --name golang golang bash
+docker rm -fv 134ba89cffa8d7d972b2fca734921d95b517a986e3367d9c86db690782c8447d # para borrar una imagen
+docker exec -ti 928f0229c95a1e8230c2209f50fd62ae87b7e16b305b07265bf835ad34aebd23 bash # Para ingresar a la imagen
+go run main.go # Para correr el programa dentro de la imagen
+kubectl run --rm -ti pod --image=nginx:alpine -- sh  # Para crear un pod de manera rapida
+# curl 10.111.173.92:80    # dentro de un pod, para hacer una peticion
+docker build -t k8s-hands-on:v2 Dockerfile .   # Para una imagen a partir de un construir el dockerfile
+docker tag k8s-hands-on:v2 richardmazo/k8s-hands-on:v2 # Para ponerle un tag a la imagen para poderla subir a docker
+docker pull richardmazo/k8s-hands-on:v2                # subir a docker hab
+kubectl get pods --watch # Para no tener que estar ejecutando cada cierto tiempo y ver los pods en tiempo real
+kubectl port-forward <pod-name> 7000:<pod-port>
+kubectl port-forward backend-k8s-hands-on-564f6f56bc-w6fhq 7003:9090
+minikube service backend-k8s-hands-on --url ## Importante para exponer a mi local el service
+kubectl get po --namespace default 
+kubectl get all -n kube-public
+kubectl create nasmespace test-ns  # Para crear un namespace
+kubectl get namespaces --show-labels
+kubectl describe namespaces
+kubectl get namespaces --show-labels
+kubectl run pod5 --image=nginx:alpine --namespace test-ns # Crear un pod en un namespace
+kubectl get pods -n dev # -n es el short cuir de -namespaces
+kubectl config current-context
+kubectl config set-context ci-context --namespace=ci --cluster=minikube --user=minikube # Para crear un context
+kubectl get po cpu-demo -o yaml # Para ver datos adicionales del yaml
+kubectl get limitrange -n dev  # get limits range
+kubectl describe limitranges -n prod -o yaml
+kubectl describe limitranges min-max -n prod # describe limitrange
+kubectl kubectl describe limitrange -n dev  # describe limit range 
+kubectl describe ns dev # describe namespace
+kubectl describe resourcequotas res-quota -n uat # Describe resource quota
+kubectl create configmap nginx-config --from-file=configmaps-examples/nginx.conf # crear configmap
+kubectl get cm # get configmaps-examples/nginx
+kubectl describe configmaps nginx-config
+kubectl create secret generic mysecret --from-file=./secret-files/test.txt # crear un secret generico
+kubectl get secrets # obtener secrets
+kubectl describe secrets mysecret # describe secrets
+kubectl get secrets mysecret -o yaml # get secret yaml
+kubectl delete secrets mysecret # delete secret
+kubectl apply -f secret-data.yaml # crear secret data a partir de un yaml
+kubectl exec -ti mypod -- sh # entrar a un pod me manera interactiva
+kubectl get pv # get pv
+kubectl describe pv # describe pv
+kubectl get pvc # describe pvc
+kubectl get pv
+kubectl get sc # get storage class
+kubectl edit pv test-pv # el comando edit se puede correr con cualquier objeto de kubernetes y permite editar la configuracion del objeto y cuando los cambios se guardan, se aplican automaticamente en k8s
+kubectl config current-context
+https://127.0.0.1:61506   # cluster-info
+C://Users//Richa//.minikube//ca.crt
+kubectl config set-cluster minikube --server=https://127.0.0.1:61506 --certificate-authority=C://Users//Richa//.minikube//ca.crt
+kubectl config current-context # current context
+kubectl config use-context minikube # para cambiar entre usuarios donde minikube es el usuario
+kubectl get roles # kubectl get roles
+kubectl describe role pod-reader # describe role
+kubectl get rolebinding # get rolebinding
+kubectl describe rolebinding read-pods # describe rolebinding
+kubectl get clusterroles # get cluster roles
+kubectl config current-context  # ver qué usuario soy
+kubectl get sa # get service account
+kubectl describe sa default # describe service account
+kubectl create ns hola # create namespace
+kubectl get sa default # get service account default
+kubectl get sa default -o yaml # get service account -o yaml
+aws sts get-caller-identity # Ver que usuario está autenticado en aws
+kubectl get all -n rot-dev # Obtener todos los recursos
+kubectl run httpd --image =httpd --requests=cpu=100m --limits=cpu=200m --expose --port=80 # Crear un deployment desde consola
+kubectl autoscale deployment httpd --cpu-percent=50 --min=1 --max=10 # Crear autoscale desde consola
+kubectl get hpa # veer los autoscale
+kubectl get -o yaml hpa httpd 
+kubectl describe hpa httpd
+kubectl edit hpta httpd
+watch kubectl get pods # ejecuta el comando cada dos segundos
+kubectl get pods -A # Toma los pods de todos los namespaces
+kubectl get nodes # get nodes

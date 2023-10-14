@@ -1,0 +1,32 @@
+##Imagenes
+docker build -- tag apache-centos .   # Crear una imagen a partir de un Dockerfile
+docker build -t test -f my-dockerfile . # Crear una imagen a partir de un archivo dockerfile con nombre my-dockerfile
+docker history -H nombre_imagen  # Ver los cambios de una imagen
+docker images # Listar imagenes
+docker rmi nombre_imagen_a_eliminar:tag  # Eliminar una imagen
+docker images -f dangling=true # filtrar imagenes huerfanas
+docker images -f dangling=true -q # filtrar imagenes huerfanas y mostrar solo el id
+
+FROM: Sistema operativo o imagen
+RUN: Correr comandos en la terminal (comandos linux por ejemplo)
+COPY: Copiar archivos desde la maquina hacia la imagen
+ADD: Nos permite agregar directamente urls hacia un archivo
+ENV: Variables de entorno
+WORDIR: Directorios de trabajo
+EXPOSE: Exponer puertos Diferentes al default
+LABEL: Labels
+USER: Qué usuario va ejecutar la tarea
+VOLUME: Volumenes, poner la data persistente dentro del contenedor para que cuando se elimine un contenedor la data sea persistente
+CMD: Cmd
+
+
+
+##Contenedores
+docker ps # Listar contenedores corriendo
+docker ps -a # Listar todos los contenedores
+docker ps --no-trunc # Listar contenedores con pantalla completa
+docker rm -fv nombre_imagen # Borrar contenedor
+docker run -d --name apache apache-centos # Correr contenedor dando un nombre
+docker run -d --name apache -p 80:80 apache-centos  # Correr contenedor dando un nombre y puertos, el primero mi maquina, el segundo el contenedor
+docker logs -f conteiner_name 
+docker rm -f exciting_chaplygin  # Eliminar un contenedor
